@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser';
 import { Mail, X } from 'lucide-react';
 
 // Initialize EmailJS with your public key
-emailjs.init('nNDmHWkPDJpYvWPDz'); // Your existing EmailJS public key
+emailjs.init('nNDmHWkPDJpYvWPDz');
 
 export const EmailGate = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,12 +13,8 @@ export const EmailGate = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Check if user has already submitted email
-        const hasSubmitted = localStorage.getItem('portfolio_email_submitted');
-        if (!hasSubmitted) {
-            // Show modal after 1 second
-            setTimeout(() => setIsOpen(true), 1000);
-        }
+        // Show modal immediately on every page load
+        setIsOpen(true);
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -27,10 +23,10 @@ export const EmailGate = () => {
         setIsSubmitting(true);
 
         try {
-            // Send email notification to you
+            // Send email notification
             await emailjs.send(
-                'service_rlq4zzk', // Your EmailJS service ID
-                'template_portfolio_visitor', // Template ID we'll create
+                'service_rlq4zzk',
+                'template_portfolio_visitor',
                 {
                     visitor_name: name,
                     visitor_email: email,
@@ -43,25 +39,16 @@ export const EmailGate = () => {
                 }
             );
 
-            // Store in localStorage to prevent re-prompting
-            localStorage.setItem('portfolio_email_submitted', 'true');
-            localStorage.setItem('visitor_name', name);
-            localStorage.setItem('visitor_email', email);
-
             setIsOpen(false);
         } catch (err) {
             console.error('Email error:', err);
-            // Even if email fails, let them through but log it
-            localStorage.setItem('portfolio_email_submitted', 'true');
-            setIsOpen(false);
+            setError('Failed to send. Please try again or skip.');
         } finally {
             setIsSubmitting(false);
         }
     };
 
     const handleSkip = () => {
-        // Allow skip but mark as submitted to not show again
-        localStorage.setItem('portfolio_email_submitted', 'true');
         setIsOpen(false);
     };
 
@@ -70,7 +57,6 @@ export const EmailGate = () => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md animate-fade-in">
             <div className="relative bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 border border-neutral-200 dark:border-neutral-800 animate-scale-in">
-                {/* Close button */}
                 <button
                     onClick={handleSkip}
                     className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
@@ -79,14 +65,12 @@ export const EmailGate = () => {
                     <X size={20} />
                 </button>
 
-                {/* Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="bg-gradient-to-br from-cyan-400 to-cyan-600 p-4 rounded-full shadow-lg">
                         <Mail className="text-white" size={32} />
                     </div>
                 </div>
 
-                {/* Content */}
                 <h2 className="text-2xl font-bold text-center text-black dark:text-white mb-2">
                     Welcome! 👋
                 </h2>
@@ -94,7 +78,6 @@ export const EmailGate = () => {
                     I'd love to know who's checking out my portfolio. Let's stay connected!
                 </p>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
