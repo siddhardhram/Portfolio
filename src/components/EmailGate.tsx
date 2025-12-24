@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail } from 'lucide-react';
-import { emailConfig } from '../config/emailjs';
+
+// Hardcoded EmailJS configuration for Vercel deployment
+const emailConfig = {
+    serviceId: 'service_ncqj8wp',
+    templateId: 'template_qt8oz33',
+    publicKey: '2Ylx7hgFRHAbV8i4Q'
+};
 
 export const EmailGate = () => {
     const [isOpen, setIsOpen] = useState(false);
