@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { Mail, X } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
-// Initialize EmailJS with your public key
+// Initialize EmailJS
 emailjs.init('nNDmHWkPDJpYvWPDz');
 
 export const EmailGate = () => {
@@ -13,7 +13,6 @@ export const EmailGate = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Show modal immediately on every page load
         setIsOpen(true);
     }, []);
 
@@ -23,11 +22,12 @@ export const EmailGate = () => {
         setIsSubmitting(true);
 
         try {
-            // Send email notification
+            // Send email to ponnamandaram711@gmail.com
             await emailjs.send(
                 'service_rlq4zzk',
                 'template_portfolio_visitor',
                 {
+                    to_email: 'ponnamandaram711@gmail.com',
                     visitor_name: name,
                     visitor_email: email,
                     visit_date: new Date().toLocaleString('en-IN', {
@@ -35,35 +35,24 @@ export const EmailGate = () => {
                         dateStyle: 'full',
                         timeStyle: 'short'
                     }),
-                    message: `New portfolio visitor: ${name} (${email})`
+                    message: `New portfolio visitor!\n\nName: ${name}\nEmail: ${email}\nTime: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`
                 }
             );
 
             setIsOpen(false);
         } catch (err) {
             console.error('Email error:', err);
-            setError('Failed to send. Please try again or skip.');
+            setError('Failed to submit. Please check your internet connection and try again.');
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    const handleSkip = () => {
-        setIsOpen(false);
-    };
-
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-lg">
             <div className="relative bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 border border-neutral-200 dark:border-neutral-800 animate-scale-in">
-                <button
-                    onClick={handleSkip}
-                    className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
-                    aria-label="Skip"
-                >
-                    <X size={20} />
-                </button>
 
                 <div className="flex justify-center mb-6">
                     <div className="bg-gradient-to-br from-cyan-400 to-cyan-600 p-4 rounded-full shadow-lg">
@@ -72,10 +61,10 @@ export const EmailGate = () => {
                 </div>
 
                 <h2 className="text-2xl font-bold text-center text-black dark:text-white mb-2">
-                    Welcome! 👋
+                    Welcome to My Portfolio! 👋
                 </h2>
                 <p className="text-center text-neutral-600 dark:text-neutral-400 mb-6">
-                    I'd love to know who's checking out my portfolio. Let's stay connected!
+                    Please share your details to continue
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -110,7 +99,9 @@ export const EmailGate = () => {
                     </div>
 
                     {error && (
-                        <p className="text-red-500 text-sm text-center">{error}</p>
+                        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+                            <p className="text-red-600 dark:text-red-400 text-sm text-center">{error}</p>
+                        </div>
                     )}
 
                     <button
@@ -130,31 +121,18 @@ export const EmailGate = () => {
                             'Continue to Portfolio'
                         )}
                     </button>
-
-                    <button
-                        type="button"
-                        onClick={handleSkip}
-                        className="w-full text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 text-sm transition-colors py-2"
-                    >
-                        Skip for now
-                    </button>
                 </form>
 
                 <p className="text-xs text-center text-neutral-400 mt-4">
-                    Your information is safe and will only be used to stay in touch.
+                    🔒 Your information is safe and secure
                 </p>
             </div>
 
             <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
         @keyframes scale-in {
           from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
-        .animate-fade-in { animation: fade-in 0.3s ease-out; }
         .animate-scale-in { animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
       `}</style>
         </div>

@@ -1,25 +1,27 @@
-# Quick EmailJS Setup for Portfolio Visitor Tracking
+# EmailJS Template Setup - REQUIRED
 
-## You Already Have EmailJS Set Up!
-I found your existing EmailJS configuration in the Contact form. I'm using the same service.
+## Quick Setup (5 minutes)
 
-## What You Need to Do:
+### Step 1: Go to EmailJS Dashboard
+Visit: https://dashboard.emailjs.com/admin/templates
 
-### Step 1: Create New Email Template
-1. Go to [EmailJS Dashboard](https://dashboard.emailjs.com/)
-2. Click on **Email Templates**
-3. Click **Create New Template**
-4. Name it: `Portfolio Visitor Notification`
-5. Template ID: `template_portfolio_visitor`
+### Step 2: Create New Template
+1. Click **"Create New Template"**
+2. Template ID: `template_portfolio_visitor`
 
-### Step 2: Template Content
+### Step 3: Configure Template
+
+**To Email:**
+```
+ponnamandaram711@gmail.com
+```
 
 **Subject:**
 ```
 🎯 New Portfolio Visitor: {{visitor_name}}
 ```
 
-**Body:**
+**Content (Body):**
 ```
 Hi Siddhardha,
 
@@ -33,27 +35,21 @@ You have a new portfolio visitor!
 
 ---
 Automated notification from your portfolio
+Portfolio URL: https://your-portfolio.vercel.app
 ```
 
-### Step 3: Save Template
-- Click **Save**
-- Make sure the Template ID is exactly: `template_portfolio_visitor`
+### Step 4: Save Template
+Click **"Save"** - Make sure Template ID is exactly: `template_portfolio_visitor`
 
 ## That's It!
-The email gate is now configured to use:
-- Service ID: `service_rlq4zzk` (your existing service)
-- Template ID: `template_portfolio_visitor` (the one you just created)
-- Public Key: `nNDmHWkPDJpYvWPDz` (your existing key)
+Your email gate will now send you an email at **ponnamandaram711@gmail.com** every time someone visits your portfolio!
 
-## Test It
-1. Clear browser localStorage (F12 → Application → Local Storage → Clear)
-2. Refresh your portfolio
-3. Fill in the email gate
-4. Check your email!
+## Already Configured:
+✅ Service ID: service_rlq4zzk
+✅ Public Key: nNDmHWkPDJpYvWPDz  
+✅ To Email: ponnamandaram711@gmail.com
 
-## Features
-✅ Name is now required
-✅ Better error handling
-✅ Lets users through even if email fails
-✅ Beautiful gradient design
-✅ Loading spinner during submission
+## Test It:
+1. Refresh your portfolio
+2. Fill in the email gate
+3. Check ponnamandaram711@gmail.com for the notification!
