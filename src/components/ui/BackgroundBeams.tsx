@@ -18,6 +18,17 @@ export const BackgroundBeams = () => {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
+        // Store canvas dimensions for use in Beam class
+        let canvasWidth = canvas.width;
+        let canvasHeight = canvas.height;
+
+        // Update dimensions on resize
+        const updateDimensions = () => {
+            canvasWidth = canvas.width;
+            canvasHeight = canvas.height;
+        };
+        window.addEventListener('resize', updateDimensions);
+
         // Beam class
         class Beam {
             x: number;
@@ -28,7 +39,7 @@ export const BackgroundBeams = () => {
             opacity: number;
 
             constructor() {
-                this.x = Math.random() * canvas.width;
+                this.x = Math.random() * canvasWidth;
                 this.y = -50;
                 this.length = Math.random() * 100 + 50;
                 this.speed = Math.random() * 2 + 1;
@@ -41,9 +52,9 @@ export const BackgroundBeams = () => {
                 this.x += Math.sin(this.angle * Math.PI / 180) * this.speed;
 
                 // Reset when off screen
-                if (this.y > canvas.height + 50) {
+                if (this.y > canvasHeight + 50) {
                     this.y = -50;
-                    this.x = Math.random() * canvas.width;
+                    this.x = Math.random() * canvasWidth;
                 }
             }
 
@@ -93,6 +104,7 @@ export const BackgroundBeams = () => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('resize', updateDimensions);
             cancelAnimationFrame(animationId);
         };
     }, []);
