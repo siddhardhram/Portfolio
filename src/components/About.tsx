@@ -1,9 +1,14 @@
 import { User, Code2 } from 'lucide-react';
 import GitHubStats from './GitHubStats';
+import { BackgroundBeams } from './ui/BackgroundBeams';
+import { TextGenerateEffect } from './ui/TextGenerateEffect';
 
 const About = () => {
   return (
     <section id="about" className="py-12 relative overflow-hidden bg-white dark:bg-black">
+      {/* Background Beams */}
+      <BackgroundBeams />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 animate-fade-in-up">
@@ -11,7 +16,7 @@ const About = () => {
           </h2>
           <div className="w-24 h-1 bg-cyan-500 mx-auto mb-8 animate-scale-in"></div>
           <p className="text-neutral-600 dark:text-neutral-400 text-lg max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            Passionate about the intersection of AI and software development
+            <TextGenerateEffect words="Passionate about the intersection of AI and software development" />
           </p>
         </div>
 
@@ -24,10 +29,10 @@ const About = () => {
 
             <div className="space-y-4 text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
               <p>
-                Hey! I'm <strong className="text-black dark:text-white">Siddhardha</strong>, an undergraduate AI/ML student and a <strong className="text-black dark:text-white">fullstack developer</strong> who loves turning ideas into reality.
+                <TextGenerateEffect words="Hey! I'm Siddhardha, an undergraduate AI/ML student and a fullstack developer who loves turning ideas into reality." />
               </p>
               <p>
-                I primarily work with <strong className="text-black dark:text-white">React, Node.js, Python, and Tailwind</strong>. I have experience with SQL and ML models, but I'm flexible and quick to adapt to other technologies.
+                <TextGenerateEffect words="I primarily work with React, Node.js, Python, and Tailwind. I have experience with SQL and ML models, but I'm flexible and quick to adapt to other technologies." />
               </p>
             </div>
 
@@ -37,7 +42,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold text-black dark:text-white">Hire Me</h3>
               </div>
               <p className="text-neutral-600 dark:text-neutral-400 text-lg">
-                I'm currently <strong className="text-black dark:text-white">available</strong> for internships and freelance work—ready to jump in and bring my skills to your team.
+                <TextGenerateEffect words="I'm currently available for internships and freelance work—ready to jump in and bring my skills to your team." />
               </p>
 
               <div className="mt-8">
