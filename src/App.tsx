@@ -1,22 +1,19 @@
-import Hero from './components/Hero';
-import Skills from './components/Skills';
-import About from './components/About';
-import Projects from './components/Projects';
-import Certificates from './components/Certificates';
-import Contact from './components/Contact';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      <Navigation />
-      <Hero />
-      <Skills />
-      <About />
-      <Projects />
-      <Certificates />
-      <Contact />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-white dark:bg-black transition-colors duration-300">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
