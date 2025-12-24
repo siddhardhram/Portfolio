@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail } from 'lucide-react';
-
-// Fallback EmailJS configuration
-const emailConfig = {
-    serviceId: 'service_rlq4zzk',
-    templateId: 'template_contact', // You may need to update this
-    publicKey: 'nNDmHWkPDJpYvWPDz'
-};
+import { emailConfig } from '../config/emailjs';
 
 export const EmailGate = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +11,7 @@ export const EmailGate = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Initialize EmailJS
+        // Initialize EmailJS with the same config as Contact form
         emailjs.init(emailConfig.publicKey);
         setIsOpen(true);
     }, []);
@@ -28,7 +22,7 @@ export const EmailGate = () => {
         setIsSubmitting(true);
 
         try {
-            // Send email using EmailJS
+            // Use exact same EmailJS setup as Contact form
             const templateParams = {
                 from_name: name,
                 from_email: email,
@@ -53,7 +47,7 @@ export const EmailGate = () => {
             console.error('Email error:', err);
             const errText = err && (err.text || err.message)
                 ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
-                : 'Failed to submit. Please check your connection and try again.';
+                : 'Failed to submit. Please try again.';
             setError(errText);
         } finally {
             setIsSubmitting(false);
