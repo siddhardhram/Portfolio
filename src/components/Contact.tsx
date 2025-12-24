@@ -126,7 +126,7 @@ const Contact = () => {
           </h2>
           <div className="w-24 h-1 bg-black dark:bg-white mx-auto mb-8 animate-scale-in"></div>
           <p className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            I'm always open to discussing new opportunities, interesting projects, or just connecting with fellow developers.
+            Let's turn ideas into reality. Whether you're looking to build something extraordinary or just want to connect over code and coffee, I'm all ears.
           </p>
         </div>
 
