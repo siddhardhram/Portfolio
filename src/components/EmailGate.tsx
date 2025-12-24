@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail } from 'lucide-react';
 
-// Initialize EmailJS
-emailjs.init('nNDmHWkPDJpYvWPDz');
+// Fallback EmailJS configuration
+const emailConfig = {
+    serviceId: 'service_rlq4zzk',
+    templateId: 'template_contact', // You may need to update this
+    publicKey: 'nNDmHWkPDJpYvWPDz'
+};
 
 export const EmailGate = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +17,8 @@ export const EmailGate = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        // Initialize EmailJS
+        emailjs.init(emailConfig.publicKey);
         setIsOpen(true);
     }, []);
 
@@ -22,27 +28,33 @@ export const EmailGate = () => {
         setIsSubmitting(true);
 
         try {
-            // Send email to ponnamandaram711@gmail.com
+            // Send email using EmailJS
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                subject: 'New Portfolio Visitor',
+                message: `New visitor to your portfolio!\n\nName: ${name}\nEmail: ${email}\nVisit Time: ${new Date().toLocaleString('en-IN', {
+                    timeZone: 'Asia/Kolkata',
+                    dateStyle: 'full',
+                    timeStyle: 'short'
+                })}`,
+                to_name: 'Siddhardha'
+            };
+
             await emailjs.send(
-                'service_rlq4zzk',
-                'template_portfolio_visitor',
-                {
-                    to_email: 'ponnamandaram711@gmail.com',
-                    visitor_name: name,
-                    visitor_email: email,
-                    visit_date: new Date().toLocaleString('en-IN', {
-                        timeZone: 'Asia/Kolkata',
-                        dateStyle: 'full',
-                        timeStyle: 'short'
-                    }),
-                    message: `New portfolio visitor!\n\nName: ${name}\nEmail: ${email}\nTime: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`
-                }
+                emailConfig.serviceId,
+                emailConfig.templateId,
+                templateParams,
+                emailConfig.publicKey
             );
 
             setIsOpen(false);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Email error:', err);
-            setError('Failed to submit. Please check your internet connection and try again.');
+            const errText = err && (err.text || err.message)
+                ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
+                : 'Failed to submit. Please check your connection and try again.';
+            setError(errText);
         } finally {
             setIsSubmitting(false);
         }
