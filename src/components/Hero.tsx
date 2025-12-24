@@ -129,15 +129,6 @@ const Hero = () => {
                 <Download size={16} className="mr-2" />
                 Resume
               </a>
-
-              {/* Mail Icon Button */}
-              <a
-                href="/contact"
-                className="group p-3 border-2 border-neutral-300 dark:border-neutral-700 text-black dark:text-white rounded-full transition-all duration-300 hover:bg-cyan-500 hover:border-cyan-500 hover:text-white dark:hover:bg-cyan-500 dark:hover:border-cyan-500 dark:hover:text-white hover:scale-105 flex items-center justify-center cursor-pointer"
-                aria-label="Contact via Form"
-              >
-                <Mail size={20} />
-              </a>
             </div>
           </div>
 
