@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Download, Mail, ExternalLink, Sparkles, Code, Zap, type LucideIcon } from 'lucide-react';
+import { ChevronDown, Download, ExternalLink, Sparkles, Code, Zap, type LucideIcon } from 'lucide-react';
 // Note: assuming the path is correct as per previous context
 import profileImg from '../assests/profile.jpg';
 import { Button } from './ui/MovingBorderBtn';

@@ -43,24 +43,36 @@ const Contact = () => {
         to_name: 'Siddhardha'
       };
 
-      await emailjs.send(
+      const response = await emailjs.send(
         emailConfig.serviceId,
         emailConfig.templateId,
         templateParams,
         emailConfig.publicKey
       );
 
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-
-      setTimeout(() => setIsSubmitted(false), 4000);
+      // Check if response indicates success (status 200 or text "OK")
+      if (response.status === 200 || response.text === 'OK') {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setIsSubmitted(false), 4000);
+      } else {
+        throw new Error('Email send failed');
+      }
     } catch (err: any) {
       console.error('Email send error:', err);
-      const errText = err && (err.text || err.message)
-        ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
-        : 'Failed to send message. Please try again.';
-      setSubmitError(errText);
-      setTimeout(() => setSubmitError(null), 8000);
+
+      // If error status is 200, it actually succeeded (EmailJS quirk)
+      if (err.status === 200 || err.text === 'OK') {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setIsSubmitted(false), 4000);
+      } else {
+        const errText = err && (err.text || err.message)
+          ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
+          : 'Failed to send message. Please try again.';
+        setSubmitError(errText);
+        setTimeout(() => setSubmitError(null), 8000);
+      }
     } finally {
       setIsSubmitting(false);
     }
