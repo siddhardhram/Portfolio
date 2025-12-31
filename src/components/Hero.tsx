@@ -69,7 +69,7 @@ const Hero = () => {
   ];
 
   return (
-    <section ref={heroRef} id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+    <section ref={heroRef} id="hero" className="flex items-center justify-center relative overflow-hidden py-20 md:py-24 lg:py-32">
       <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
         {/* Removed colored blobs for strict B/W aesthetic, or kept them extremely subtle if needed. 
             User said "black and white only good css". Removing colored blobs. */}

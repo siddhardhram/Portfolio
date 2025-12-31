@@ -5,7 +5,7 @@ import Projects from '../components/Projects';
 
 const Home = () => {
     return (
-        <div className="pb-20">
+        <div className="pt-16 pb-20">
             <Hero />
             <Skills />
             <About />
