@@ -54,7 +54,7 @@ const Projects = () => {
     {
       title: 'DTC Disaster Tweet Classifier',
       description: 'Machine Learning classifier built with web scraping technology to extract and analyze disaster-related tweets from Twitter in real-time. Uses BeautifulSoup and NLP techniques for sentiment analysis and emergency detection from scraped social media data.',
-      image: 'https://images.unsplash.com/photo-1534237886190-ced735ca4b73?auto=format&fit=crop&w=800&q=80',
+      image: '/dtc-project.png',
       tech: ['Python', 'NLP', 'Web Scraping', 'Scikit-learn', 'BeautifulSoup'],
       features: ['Real-time Classification', 'Sentiment Analysis', 'Web Scraping', 'Emergency Detection'],
       github: 'https://github.com/siddhardhram/DTC-Webscraped.git',

@@ -83,8 +83,8 @@ const Hero = () => {
         <FloatingIcon icon={Code} delay={1.5} className="bottom-20 right-20" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
           <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start">
 
             <div className="flex flex-col items-center lg:items-start mb-6 gap-3">
@@ -117,9 +117,9 @@ const Hero = () => {
                 onClick={scrollToProjects}
                 borderRadius="1.75rem"
                 className="bg-white dark:bg-black text-black dark:text-white border-neutral-200 dark:border-neutral-800"
-                containerClassName="h-12 w-auto"
+                containerClassName="h-auto"
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 px-6 py-3 text-sm font-medium">
                   View Projects
                   <ExternalLink size={16} />
                 </span>

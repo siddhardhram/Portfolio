@@ -141,6 +141,12 @@ function IconContainer({
             return;
         }
 
+        // Handle home link - scroll to top
+        if (link === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
         if (isInternal && link.startsWith('#')) {
             e.preventDefault();
             const element = document.getElementById(link.substring(1)); // Remove #
@@ -176,7 +182,7 @@ function IconContainer({
     // Use Link for internal routes (starting with /)
     if (isInternal && link.startsWith('/')) {
         return (
-            <Link to={link} aria-label={name}>
+            <Link to={link} onClick={handleClick} aria-label={name}>
                 {content}
             </Link>
         );
