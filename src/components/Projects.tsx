@@ -1,12 +1,6 @@
 import { Button } from './ui/MovingBorderBtn';
 import { Users, Zap, Brain, ExternalLink, Github } from 'lucide-react';
 
-interface ProjectStats {
-  stars: number;
-  forks: number;
-  views: number;
-}
-
 interface Project {
   title: string;
   description: string;
@@ -16,13 +10,11 @@ interface Project {
   github: string;
   demo: string;
   icon: any;
-  stats: ProjectStats;
   status: string;
   category: string;
 }
 
 const Projects = () => {
-  // hover effect is handled by CSS group-hover now
 
   const projects: Project[] = [
     {
@@ -31,10 +23,9 @@ const Projects = () => {
       image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80',
       tech: ['React', 'IndexedDB', 'QR Code', 'Encryption', 'PWA'],
       features: ['Offline Transactions', 'QR Payments', 'Auto Sync', 'Secure Storage'],
-      github: 'https://github.com/siddhardhram/offlinepayment.git',
+      github: 'https://github.com/siddhardhram/offlinepayment',
       demo: '#',
       icon: Users,
-      stats: { stars: 28, forks: 10, views: 180 },
       status: 'Production',
       category: 'Full Stack'
     },
@@ -44,10 +35,9 @@ const Projects = () => {
       image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80',
       tech: ['Python', 'Algorithm Design', 'React', 'Flask', 'PostgreSQL'],
       features: ['Auto Scheduling', 'Conflict Detection', 'Optimization', 'Export Options'],
-      github: 'https://github.com/siddhardhram/timetable-server.git',
+      github: 'https://github.com/siddhardhram/timetable-server',
       demo: '#',
       icon: Zap,
-      stats: { stars: 22, forks: 7, views: 145 },
       status: 'Live',
       category: 'AI/ML'
     },
@@ -57,10 +47,9 @@ const Projects = () => {
       image: '/dtc-project.png',
       tech: ['Python', 'NLP', 'Web Scraping', 'Scikit-learn', 'BeautifulSoup'],
       features: ['Real-time Classification', 'Sentiment Analysis', 'Web Scraping', 'Emergency Detection'],
-      github: 'https://github.com/siddhardhram/DTC-Webscraped.git',
+      github: 'https://github.com/siddhardhram/DTC-Webscraped',
       demo: '#',
       icon: Brain,
-      stats: { stars: 35, forks: 14, views: 220 },
       status: 'Research',
       category: 'AI/ML'
     }

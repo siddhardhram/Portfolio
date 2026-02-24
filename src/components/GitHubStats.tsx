@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GitBranch, Star, GitFork } from 'lucide-react';
+import { GitBranch, Star, GitFork, Users, BookOpen, Eye } from 'lucide-react';
 
 interface ContributionDay {
     date: string;
@@ -7,21 +7,63 @@ interface ContributionDay {
     level: number;
 }
 
+interface GitHubProfile {
+    followers: number;
+    following: number;
+    public_repos: number;
+    name: string;
+    avatar_url: string;
+}
+
 const GitHubStats = () => {
     const [contributions, setContributions] = useState<number[]>([]);
-    const [totalContributions, setTotalContributions] = useState(38);
+    const [totalContributions, setTotalContributions] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [profile, setProfile] = useState<GitHubProfile | null>(null);
+    const [visitorCount, setVisitorCount] = useState<number | null>(null);
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState<number>(currentYear);
 
+    // Fetch GitHub profile
     useEffect(() => {
-        // Fetch real GitHub contribution data
+        const fetchGitHubProfile = async () => {
+            try {
+                const res = await fetch('https://api.github.com/users/siddhardhram');
+                const data = await res.json();
+                setProfile({
+                    followers: data.followers,
+                    following: data.following,
+                    public_repos: data.public_repos,
+                    name: data.name,
+                    avatar_url: data.avatar_url,
+                });
+            } catch (e) {
+                console.error('Failed to fetch GitHub profile:', e);
+            }
+        };
+        fetchGitHubProfile();
+    }, []);
+
+    // Visitor Counter via countapi.xyz
+    useEffect(() => {
+        const incrementVisitor = async () => {
+            try {
+                const res = await fetch('https://api.countapi.xyz/hit/siddhardhram-portfolio/visits');
+                const data = await res.json();
+                setVisitorCount(data.value);
+            } catch (e) {
+                console.error('Failed to fetch visitor count:', e);
+            }
+        };
+        incrementVisitor();
+    }, []);
+
+    // Fetch contributions
+    useEffect(() => {
         const fetchGitHubData = async () => {
             setIsLoading(true);
             try {
-                const username = 'siddhardhram'; // Your GitHub username
-
-                // Using GitHub's contribution graph via github-contributions-api
+                const username = 'siddhardhram';
                 const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${selectedYear}`);
                 const data = await response.json();
 
@@ -29,7 +71,6 @@ const GitHubStats = () => {
                     const contributionArray: number[] = [];
                     let total = 0;
 
-                    // Process the contributions
                     data.contributions.forEach((day: ContributionDay) => {
                         contributionArray.push(day.count);
                         total += day.count;
@@ -38,12 +79,10 @@ const GitHubStats = () => {
                     setContributions(contributionArray);
                     setTotalContributions(total);
                 } else {
-                    // Fallback to default data if API fails
                     setContributions(generateFallbackContributions());
                 }
             } catch (error) {
                 console.error('Error fetching GitHub data:', error);
-                // Use fallback data
                 setContributions(generateFallbackContributions());
             } finally {
                 setIsLoading(false);
@@ -53,26 +92,9 @@ const GitHubStats = () => {
         fetchGitHubData();
     }, [selectedYear]);
 
-    // Fallback contribution data (38 contributions spread across the year)
     const generateFallbackContributions = () => {
         const contributions: number[] = [];
-        const totalDays = 365;
-        const totalContribs = 38;
-
-        // Initialize all days with 0
-        for (let i = 0; i < totalDays; i++) {
-            contributions.push(0);
-        }
-
-        // Distribute 38 contributions across the year
-        let remaining = totalContribs;
-        while (remaining > 0) {
-            const randomDay = Math.floor(Math.random() * totalDays);
-            const randomAmount = Math.min(Math.floor(Math.random() * 4) + 1, remaining);
-            contributions[randomDay] += randomAmount;
-            remaining -= randomAmount;
-        }
-
+        for (let i = 0; i < 365; i++) contributions.push(0);
         return contributions;
     };
 
@@ -84,7 +106,6 @@ const GitHubStats = () => {
         return 'bg-neutral-100 dark:bg-neutral-900';
     };
 
-    // Calculate streak
     const calculateStreak = () => {
         let currentStreak = 0;
         let maxStreak = 0;
@@ -102,13 +123,11 @@ const GitHubStats = () => {
             }
         }
         maxStreak = Math.max(maxStreak, tempStreak);
-
         return { currentStreak, maxStreak };
     };
 
-    const { currentStreak, maxStreak } = calculateStreak();
+    const { maxStreak } = calculateStreak();
 
-    // Group contributions by week
     const weeks: number[][] = [];
     for (let i = 0; i < contributions.length; i += 7) {
         weeks.push(contributions.slice(i, i + 7));
@@ -124,46 +143,78 @@ const GitHubStats = () => {
 
     return (
         <div className="space-y-6">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Total Contributions */}
-                <div className="bg-gradient-to-br from-cyan-50 to-white dark:from-cyan-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+
+            {/* Profile Stats from GitHub API */}
+            {profile && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Public Repos */}
+                    <div className="bg-gradient-to-br from-cyan-50 to-white dark:from-cyan-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Public Repos</p>
+                                <p className="text-3xl font-bold text-black dark:text-white">{profile.public_repos}</p>
+                                <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">repositories</p>
+                            </div>
+                            <div className="bg-cyan-500/10 p-3 rounded-full">
+                                <BookOpen className="text-cyan-500" size={24} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Followers */}
+                    <div className="bg-gradient-to-br from-orange-50 to-white dark:from-orange-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Followers</p>
+                                <p className="text-3xl font-bold text-black dark:text-white">{profile.followers}</p>
+                                <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">on GitHub</p>
+                            </div>
+                            <div className="bg-orange-500/10 p-3 rounded-full">
+                                <Users className="text-orange-500" size={24} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Following */}
+                    <div className="bg-gradient-to-br from-purple-50 to-white dark:from-purple-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Following</p>
+                                <p className="text-3xl font-bold text-black dark:text-white">{profile.following}</p>
+                                <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">developers</p>
+                            </div>
+                            <div className="bg-purple-500/10 p-3 rounded-full">
+                                <GitFork className="text-purple-500" size={24} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Contribution Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gradient-to-br from-green-50 to-white dark:from-green-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Total Contributions</p>
+                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Contributions</p>
                             <p className="text-3xl font-bold text-black dark:text-white">{totalContributions}</p>
                             <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">in {selectedYear}</p>
                         </div>
-                        <div className="bg-cyan-500/10 p-3 rounded-full">
-                            <GitBranch className="text-cyan-500" size={24} />
+                        <div className="bg-green-500/10 p-3 rounded-full">
+                            <GitBranch className="text-green-500" size={24} />
                         </div>
                     </div>
                 </div>
 
-                {/* Current Streak */}
-                <div className="bg-gradient-to-br from-orange-50 to-white dark:from-orange-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Current Streak</p>
-                            <p className="text-3xl font-bold text-black dark:text-white">{currentStreak}</p>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">days</p>
-                        </div>
-                        <div className="bg-orange-500/10 p-3 rounded-full">
-                            <Star className="text-orange-500" size={24} />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Longest Streak */}
-                <div className="bg-gradient-to-br from-purple-50 to-white dark:from-purple-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-gradient-to-br from-yellow-50 to-white dark:from-yellow-950/20 dark:to-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Longest Streak</p>
                             <p className="text-3xl font-bold text-black dark:text-white">{maxStreak}</p>
                             <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">days</p>
                         </div>
-                        <div className="bg-purple-500/10 p-3 rounded-full">
-                            <GitFork className="text-purple-500" size={24} />
+                        <div className="bg-yellow-500/10 p-3 rounded-full">
+                            <Star className="text-yellow-500" size={24} />
                         </div>
                     </div>
                 </div>
@@ -177,7 +228,6 @@ const GitHubStats = () => {
                         <p className="text-sm text-neutral-600 dark:text-neutral-400">{totalContributions} contributions in {selectedYear}</p>
                     </div>
 
-                    {/* Year Selector */}
                     <div className="flex items-center gap-2">
                         <label htmlFor="year-select" className="text-sm text-neutral-600 dark:text-neutral-400">Year:</label>
                         <select
@@ -196,15 +246,13 @@ const GitHubStats = () => {
                     <div className="inline-flex gap-1 min-w-full">
                         {weeks.map((week, weekIndex) => (
                             <div key={weekIndex} className="flex flex-col gap-1">
-                                {week.map((count, dayIndex) => {
-                                    return (
-                                        <div
-                                            key={dayIndex}
-                                            className={`w-3 h-3 rounded-sm ${getContributionColor(count)} border border-neutral-200 dark:border-neutral-800 transition-all duration-200 hover:scale-125 hover:border-cyan-500 cursor-pointer`}
-                                            title={`${count} contribution${count !== 1 ? 's' : ''}`}
-                                        />
-                                    );
-                                })}
+                                {week.map((count, dayIndex) => (
+                                    <div
+                                        key={dayIndex}
+                                        className={`w-3 h-3 rounded-sm ${getContributionColor(count)} border border-neutral-200 dark:border-neutral-800 transition-all duration-200 hover:scale-125 hover:border-cyan-500 cursor-pointer`}
+                                        title={`${count} contribution${count !== 1 ? 's' : ''}`}
+                                    />
+                                ))}
                             </div>
                         ))}
                     </div>
@@ -222,6 +270,23 @@ const GitHubStats = () => {
                     <span>More</span>
                 </div>
             </div>
+
+            {/* Visitor Counter */}
+            <div className="bg-gradient-to-br from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-sm">
+                <div className="flex items-center justify-center gap-4">
+                    <div className="bg-cyan-500/10 p-3 rounded-full">
+                        <Eye className="text-cyan-500" size={22} />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">Portfolio Visitors</p>
+                        <p className="text-3xl font-bold text-black dark:text-white">
+                            {visitorCount !== null ? visitorCount.toLocaleString() : '—'}
+                        </p>
+                        <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">total visits since launch</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 };
