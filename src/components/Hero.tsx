@@ -85,9 +85,9 @@ const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
-          <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start">
+          <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
 
-            <div className="flex flex-col items-center lg:items-start mb-6 gap-3">
+            <div className="flex flex-col items-center lg:items-start mb-6 gap-3 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 text-sm font-medium">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                 Available for work
@@ -95,11 +95,11 @@ const Hero = () => {
               <Clock />
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-black dark:text-white leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-black dark:text-white leading-tight animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
               Hi, I'm <span className="underline decoration-neutral-400 decoration-4 underline-offset-4">Siddhardha</span>
             </h1>
 
-            <div className="text-2xl md:text-3xl mb-8 font-medium h-12">
+            <div className="text-2xl md:text-3xl mb-8 font-medium h-12 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
               <TypewriterEffect
                 words={roles}
                 className="inline-block"
@@ -107,12 +107,12 @@ const Hero = () => {
               />
             </div>
 
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
               B.Tech AI/ML student passionate about building innovative solutions at the intersection of
               artificial intelligence and full-stack development.
             </p>
 
-            <div className="flex flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="flex flex-row items-center justify-center lg:justify-start gap-4 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
               <Button
                 onClick={scrollToProjects}
                 borderRadius="1.75rem"
@@ -132,7 +132,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
               {/* Enlarged Profile Image */}
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white dark:border-black shadow-2xl">
@@ -162,6 +162,22 @@ const Hero = () => {
               background-size: 200% 200%;
               background-position: right center;
             }
+          }
+
+          @keyframes fade-in-up {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
           }
         `}
       </style>

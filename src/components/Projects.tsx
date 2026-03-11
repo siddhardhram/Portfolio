@@ -74,51 +74,64 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`group bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:border-neutral-300 dark:hover:border-neutral-700`}
+              className="group relative h-[420px] w-full [perspective:1000px]"
             >
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
-                <div className="absolute bottom-4 left-4">
-                  <span className="px-2 py-1 bg-black/60 backdrop-blur-sm rounded-md text-xs font-medium text-white border border-white/10">
-                    {project.category}
-                  </span>
+              <div
+                className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] md:group-hover:[transform:rotateY(180deg)] shadow-xl hover:shadow-2xl rounded-2xl"
+              >
+                {/* Front Side */}
+                <div
+                  className="absolute inset-0 h-full w-full rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 [backface-visibility:hidden] overflow-hidden flex flex-col"
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transform"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                    <div className="absolute bottom-4 left-4">
+                      <span className="px-2 py-1 bg-black/60 backdrop-blur-sm rounded-md text-xs font-medium text-white border border-white/10">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col justify-center items-center text-center">
+                    <h3 className="text-xl font-bold text-black dark:text-white mb-2">{project.title}</h3>
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm hidden md:block">Hover to reveal details</p>
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm md:hidden">Tap to reveal details</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-black dark:text-white mb-2">{project.title}</h3>
-                <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-4 line-clamp-3">{project.description}</p>
+                {/* Back Side */}
+                <div
+                  className="absolute inset-0 h-full w-full rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden p-6 flex flex-col items-center justify-center text-center"
+                >
+                  <h3 className="text-xl font-bold text-cyan-600 dark:text-cyan-400 mb-3">{project.title}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 leading-relaxed flex-1 flex items-center">{project.description}</p>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech, i) => (
-                    <span key={i} className="px-2 py-1 bg-neutral-200 dark:bg-neutral-800 rounded-md text-xs font-medium text-neutral-700 dark:text-neutral-300">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    {project.tech.map((tech, i) => (
+                      <span key={i} className="px-2 py-1 bg-neutral-200 dark:bg-neutral-800 rounded-md text-xs font-medium text-neutral-700 dark:text-neutral-300">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-                <div className="flex items-center justify-between mt-4">
-                  <div className="flex gap-3">
+                  <div className="mt-auto flex w-full gap-3">
                     <a href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg transition-colors">
-                      <Github size={20} className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white" />
+                      className="flex-1 flex justify-center items-center gap-2 p-2.5 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 rounded-lg transition-colors font-medium text-sm text-black dark:text-white">
+                      <Github size={18} /> Code
                     </a>
                     <a href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg transition-colors">
-                      <ExternalLink size={20} className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white" />
+                      className="flex-1 flex justify-center items-center gap-2 p-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium text-sm">
+                      <ExternalLink size={18} /> Demo
                     </a>
                   </div>
-                  {/* Stats are kept simple text */}
-                  {/* <span className="text-xs text-neutral-500">{project.status}</span> */}
                 </div>
               </div>
             </div>
