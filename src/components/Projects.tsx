@@ -1,5 +1,6 @@
 import { Button } from './ui/MovingBorderBtn';
 import { Users, Zap, Brain, ExternalLink, Github } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Project {
   title: string;
@@ -76,8 +77,13 @@ const Projects = () => {
               key={index}
               className="group relative h-[420px] w-full [perspective:1000px]"
             >
-              <div
-                className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] md:group-hover:[transform:rotateY(180deg)] shadow-xl hover:shadow-2xl rounded-2xl"
+              <motion.div
+                initial={{ rotateY: 0 }}
+                whileInView={{ rotateY: 180 }}
+                whileHover={{ rotateY: 180 }}
+                viewport={{ once: false, amount: 0.4 }}
+                transition={{ duration: 0.8, ease: "anticipate" }}
+                className="relative h-full w-full [transform-style:preserve-3d] shadow-xl hover:shadow-2xl rounded-2xl"
               >
                 {/* Front Side */}
                 <div
@@ -133,7 +139,7 @@ const Projects = () => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>
