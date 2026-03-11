@@ -1,10 +1,11 @@
-import { Code2, Database, Terminal, Cpu, Palette, Server, FileCode } from 'lucide-react';
+import { Code2, Database, Terminal, Cpu, Palette, Server, FileCode, Send } from 'lucide-react';
 
 const techStackIcons = [
   { name: 'React', icon: <Code2 className="text-[#61DAFB]" />, color: "border-[#61DAFB]/20 hover:border-[#61DAFB]" },
   { name: 'JavaScript', icon: <FileCode className="text-[#F7DF1E]" />, color: "border-[#F7DF1E]/20 hover:border-[#F7DF1E]" },
   { name: 'Python', icon: <Terminal className="text-[#3776AB]" />, color: "border-[#3776AB]/20 hover:border-[#3776AB]" },
-  { name: 'C++', icon: <Cpu className="text-[#00599C]" />, color: "border-[#00599C]/20 hover:border-[#00599C]" },
+  { name: 'Postman', icon: <Send className="text-[#FF6C37]" />, color: "border-[#FF6C37]/20 hover:border-[#FF6C37]" },
+  { name: 'MongoDB', icon: <Database className="text-[#47A248]" />, color: "border-[#47A248]/20 hover:border-[#47A248]" },
   { name: 'MySQL', icon: <Database className="text-[#4479A1]" />, color: "border-[#4479A1]/20 hover:border-[#4479A1]" },
   { name: 'Machine Learning', icon: <Cpu className="text-[#FF6F00]" />, color: "border-[#FF6F00]/20 hover:border-[#FF6F00]" },
   { name: 'Node.js', icon: <Server className="text-[#339933]" />, color: "border-[#339933]/20 hover:border-[#339933]" },
