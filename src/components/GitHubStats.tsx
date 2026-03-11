@@ -21,7 +21,7 @@ const GitHubStats = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [profile, setProfile] = useState<GitHubProfile | null>(null);
     const currentYear = new Date().getFullYear();
-    const [selectedYear, setSelectedYear] = useState<number>(currentYear);
+    const [selectedYear, setSelectedYear] = useState<number | string>('last');
 
     useEffect(() => {
         const fetchGitHubProfile = async () => {
@@ -161,7 +161,7 @@ const GitHubStats = () => {
                     </div>
                     <div>
                         <p className="text-xl font-bold text-black dark:text-white">{totalContributions}</p>
-                        <p className="text-xs text-neutral-500 dark:text-neutral-500">contributions in {selectedYear}</p>
+                        <p className="text-xs text-neutral-500 dark:text-neutral-500">contributions in {selectedYear === 'last' ? 'Last Year' : selectedYear}</p>
                     </div>
                 </div>
                 <div className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex items-center gap-3 hover:shadow-md transition-all duration-300">
@@ -181,15 +181,16 @@ const GitHubStats = () => {
                     <div>
                         <h4 className="text-sm font-semibold text-black dark:text-white">Contribution Activity</h4>
                         {!isLoading && (
-                            <p className="text-xs text-neutral-500 mt-0.5">{totalContributions} contributions in {selectedYear}</p>
+                            <p className="text-xs text-neutral-500 mt-0.5">{totalContributions} contributions in {selectedYear === 'last' ? 'Last Year' : selectedYear}</p>
                         )}
                     </div>
                     <select
                         id="year-select"
                         value={selectedYear}
-                        onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                        onChange={(e) => setSelectedYear(e.target.value === 'last' ? 'last' : parseInt(e.target.value))}
                         className="px-2 py-1 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-xs text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-cyan-500 cursor-pointer"
                     >
+                        <option value="last">Last Year</option>
                         <option value={currentYear}>{currentYear}</option>
                         <option value={currentYear - 1}>{currentYear - 1}</option>
                     </select>
