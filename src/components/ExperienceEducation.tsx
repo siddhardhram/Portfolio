@@ -1,4 +1,4 @@
-import { Briefcase, GraduationCap, Calendar, MapPin, CheckCircle, Award } from 'lucide-react';
+import { Briefcase, GraduationCap, Calendar, MapPin, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ExperienceEducation = () => {

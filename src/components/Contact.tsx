@@ -58,17 +58,18 @@ const Contact = () => {
       } else {
         throw new Error('Email send failed');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Email send error:', err);
+      const emailErr = err as { status?: number; text?: string; message?: string } | null;
 
       // If error status is 200, it actually succeeded (EmailJS quirk)
-      if (err.status === 200 || err.text === 'OK') {
+      if (emailErr?.status === 200 || emailErr?.text === 'OK') {
         setIsSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
         setTimeout(() => setIsSubmitted(false), 4000);
       } else {
-        const errText = err && (err.text || err.message)
-          ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
+        const errText = emailErr && (emailErr.text || emailErr.message)
+          ? `${emailErr.text || emailErr.message}${emailErr.status ? ` (status ${emailErr.status})` : ''}`
           : 'Failed to send message. Please try again.';
         setSubmitError(errText);
         setTimeout(() => setSubmitError(null), 8000);

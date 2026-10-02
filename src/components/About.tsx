@@ -1,4 +1,4 @@
-import { User, Code2, Sparkles, MapPin, GraduationCap, CheckCircle } from 'lucide-react';
+import { User, Code2, MapPin, GraduationCap, CheckCircle } from 'lucide-react';
 import GitHubStats from './GitHubStats';
 import { BackgroundBeams } from './ui/BackgroundBeams';
 

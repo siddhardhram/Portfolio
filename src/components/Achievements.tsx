@@ -1,4 +1,4 @@
-import { Trophy, Award, Target, CheckCircle2, ExternalLink, Sparkles, BookOpen, ShieldCheck } from 'lucide-react';
+import { Trophy, Award, Target, CheckCircle2, ExternalLink, Sparkles, ShieldCheck, type LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Achievement {
@@ -11,7 +11,7 @@ interface Achievement {
   highlights: string[];
   link?: string;
   linkText?: string;
-  icon: any;
+  icon: LucideIcon;
 }
 
 interface Certification {

@@ -6,15 +6,14 @@ import {
   Database, 
   Terminal, 
   Sparkles,
-  Layers,
-  Cpu,
-  CheckCircle2
+  CheckCircle2,
+  type LucideIcon
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface SkillCategory {
   title: string;
-  icon: any;
+  icon: LucideIcon;
   description: string;
   skills: string[];
 }

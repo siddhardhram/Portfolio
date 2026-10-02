@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Github, Bot, Target, Calendar, Sparkles, Layers, Cpu, Globe, ArrowUpRight, Check } from 'lucide-react';
+import { ExternalLink, Github, Bot, Target, Calendar, Sparkles, Layers, Cpu, Globe, ArrowUpRight, Check, type LucideIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface Project {
@@ -15,7 +15,7 @@ export interface Project {
   tech: string[];
   github: string;
   demo?: string;
-  icon: any;
+  icon: LucideIcon;
   gradient: string;
 }
 

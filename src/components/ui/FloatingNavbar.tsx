@@ -5,6 +5,7 @@ import {
     useSpring,
     useTransform,
     AnimatePresence,
+    type MotionValue,
 } from "framer-motion";
 import { cn } from "../../utils/cn";
 import { Moon, Sun } from "lucide-react";
@@ -21,7 +22,7 @@ export const FloatingNav = ({
     }[];
     className?: string;
 }) => {
-    let mouseX = useMotionValue(Infinity);
+    const mouseX = useMotionValue(Infinity);
     const [theme, setTheme] = useState<'dark' | 'light'>(() => {
         if (typeof window !== 'undefined' && window.localStorage) {
             return localStorage.getItem('theme') as 'dark' | 'light' || 'dark';
@@ -104,29 +105,29 @@ function IconContainer({
     link,
     onClick,
 }: {
-    mouseX: any;
+    mouseX: MotionValue<number>;
     name?: string;
-    icon: any;
+    icon: React.ReactNode;
     link: string;
     onClick?: () => void;
 }) {
-    let ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
 
-    let distance = useTransform(mouseX, (val: number) => {
-        let bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    const distance = useTransform(mouseX, (val: number) => {
+        const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
 
         return val - bounds.x - bounds.width / 2;
     });
 
-    let widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-    let heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
-    let width = useSpring(widthTransform, {
+    const width = useSpring(widthTransform, {
         mass: 0.1,
         stiffness: 150,
         damping: 12,
     });
-    let height = useSpring(heightTransform, {
+    const height = useSpring(heightTransform, {
         mass: 0.1,
         stiffness: 150,
         damping: 12,

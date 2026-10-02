@@ -21,17 +21,17 @@ export function Button({
 }: {
   borderRadius?: string;
   children: React.ReactNode;
-  as?: any;
+  as?: React.ElementType;
   containerClassName?: string;
   borderClassName?: string;
   duration?: number;
   className?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }) {
   return (
     <Component
       className={cn(
-        "bg-transparent relative text-xl  h-16 w-40 p-[1px] overflow-hidden ",
+        "bg-transparent relative text-xl h-16 w-40 p-[1px] overflow-hidden",
         containerClassName
       )}
       style={{
@@ -43,7 +43,7 @@ export function Button({
         className="absolute inset-0"
         style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
       >
-        <MovingBorder duration={duration} rx="30%" ry="30%" />
+        <MovingBorder duration={duration} rx="30%" ry="30%" className={borderClassName} />
       </div>
 
       <div
@@ -62,19 +62,19 @@ export function Button({
 }
 
 export const MovingBorder = ({
-  children,
   duration = 2000,
   rx,
   ry,
+  className,
   ...otherProps
 }: {
-  children?: React.ReactNode;
   duration?: number;
   rx?: string;
   ry?: string;
-  [key: string]: any;
+  className?: string;
+  [key: string]: unknown;
 }) => {
-  const pathRef = useRef<any>();
+  const pathRef = useRef<SVGRectElement>(null);
   const progress = useMotionValue<number>(0);
 
   useAnimationFrame((time) => {
@@ -99,9 +99,9 @@ export const MovingBorder = ({
   return (
     <>
       <svg
-        xmlns="http://www.w3.org/200_svg"
+        xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
-        className="absolute h-full w-full"
+        className={cn("absolute h-full w-full", className)}
         width="100%"
         height="100%"
         {...otherProps}

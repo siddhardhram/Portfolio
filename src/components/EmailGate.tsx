@@ -50,10 +50,11 @@ export const EmailGate = () => {
 
             // Close modal on success
             setIsOpen(false);
-        } catch (err: any) {
+        } catch (err) {
             console.error('Email error:', err);
-            const errText = err && (err.text || err.message)
-                ? `${err.text || err.message}${err.status ? ` (status ${err.status})` : ''}`
+            const emailErr = err as { status?: number; text?: string; message?: string } | null;
+            const errText = emailErr && (emailErr.text || emailErr.message)
+                ? `${emailErr.text || emailErr.message}${emailErr.status ? ` (status ${emailErr.status})` : ''}`
                 : 'Failed to submit. Please try again.';
             setError(errText);
         } finally {
