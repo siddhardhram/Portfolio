@@ -1,17 +1,21 @@
 import Hero from '../components/Hero';
+import Projects from '../components/Projects';
+import Achievements from '../components/Achievements';
+import ExperienceEducation from '../components/ExperienceEducation';
 import Skills from '../components/Skills';
 import About from '../components/About';
-import Projects from '../components/Projects';
 
 const Home = () => {
-    return (
-        <div className="pt-16 pb-20">
-            <Hero />
-            <Skills />
-            <About />
-            <Projects />
-        </div>
-    );
+  return (
+    <div className="pt-4 pb-20">
+      <Hero />
+      <Projects />
+      <Achievements />
+      <ExperienceEducation />
+      <Skills />
+      <About />
+    </div>
+  );
 };
 
 export default Home;

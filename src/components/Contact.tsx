@@ -96,7 +96,7 @@ const Contact = () => {
     {
       icon: MapPin,
       label: 'Location',
-      value: 'Andhra Pradesh, India',
+      value: 'Bhimavaram, Andhra Pradesh, India',
       href: '#',
       description: 'Based in India, work globally'
     }
